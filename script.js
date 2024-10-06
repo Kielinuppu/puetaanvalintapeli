@@ -1,7 +1,8 @@
 const gameData = {
     images: ['kuva1.avif', 'kuva2.avif', 'kuva3.avif', 'kuva4.avif', 'kuva5.avif', 'kuva6.avif', 'kuva7.avif', 'kuva8.avif'],
     mainImages: ['kuva10.avif', 'kuva11.avif', 'kuva12.avif', 'kuva13.avif', 'kuva14.avif', 'kuva15.avif', 'kuva16.avif', 'kuva17.avif'],
-    audios: ['aani1.mp3', 'aani2.mp3', 'aani3.mp3', 'aani4.mp3', 'aani5.mp3', 'aani6.mp3', 'aani7.mp3', 'aani8.mp3']
+    audios: ['aani1.mp3', 'aani2.mp3', 'aani3.mp3', 'aani4.mp3', 'aani5.mp3', 'aani6.mp3', 'aani7.mp3', 'aani8.mp3'],
+    finalImage: 'kuva18.avif'
 };
 
 let currentLevel = 0;
@@ -19,6 +20,9 @@ function startGame() {
 function loadLevel() {
     const mainImage = document.getElementById('main-image');
     mainImage.src = gameData.mainImages[currentLevel];
+
+    // Varmista, että otsikko näkyy
+    document.querySelector('#game-screen h2').style.display = 'block';
 
     const optionsContainer = document.getElementById('options-container');
     optionsContainer.innerHTML = '';
@@ -77,14 +81,21 @@ function selectOption(index) {
 function showFeedback() {
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('feedback-screen').style.display = 'block';
+    document.getElementById('final-image').src = gameData.finalImage;
 }
 
 function playAgain() {
     currentLevel = 0;
     selectedImages.clear();
     shuffledIndices = shuffleArray([...Array(8).keys()]);
+    
     document.getElementById('feedback-screen').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
+    document.querySelector('#game-screen h2').style.display = 'block';
+    
+    // Varmista, että pääkuva palautuu ensimmäiseen kuvaan
+    document.getElementById('main-image').src = gameData.mainImages[0];
+    
     loadLevel();
 }
 
